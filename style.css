@@ -1,0 +1,363 @@
+:root{
+  --bg1:#fff7f3; --bg2:#fff0ef; --accent:#c84b7a; --gold:#ffcc66;
+  --text-dark: #333;
+  --text-light: #666;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+body{
+  background-image: url('https://files.catbox.moe/jwcpxo.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow-x:hidden;
+  color:var(--text-dark)
+}
+.container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:960px;max-width:96%;background:linear-gradient(135deg,rgba(255,255,255,0.85),rgba(255,255,255,0.6));backdrop-filter:blur(8px);border-radius:18px;padding:28px;box-shadow:0 8px 30px rgba(200,60,100,0.07);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.9)}
+header{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  gap:16px;
+  text-align: center;
+}
+.logo{width:84px;height:84px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#ff7aa2);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:26px;font-weight:700;flex-shrink:0;
+  box-shadow: 0 0 10px rgba(200, 75, 122, 0.5), 0 0 20px rgba(200, 75, 122, 0.3);
+  animation: glow 4s ease-in-out infinite;
+}
+h1{font-family:'Playfair Display',serif;margin:0;font-size:32px;color:var(--accent); animation: fadeInDown 0.8s both;}
+.lead{margin:6px 0 0;color:var(--text-light); animation: fadeInUp 0.8s 0.2s both;}
+.content{
+  display: flex;
+  justify-content: center;
+  margin-top:18px;
+}
+.left{
+  max-width: 560px; /* Add a max-width to prevent it from becoming too wide */
+  flex: 1;
+}
+.message{background:rgba(255,255,255,0.9);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.04); animation: fadeInUp 0.8s 0.4s both;}
+.message h2{margin:0 0 8px;font-family:'Playfair Display',serif}
+.message p{margin:0 0 12px;line-height:1.5;color:var(--text-dark)}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+button{cursor:pointer;border:0;padding:10px 14px;border-radius:10px;font-weight:600;transition:transform 0.2s, box-shadow 0.2s}
+button:hover{transform:translateY(-2px); box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+.btn-play{background:linear-gradient(90deg,var(--accent),#ff7aa2);color:white}
+.btn-print{background:var(--gold);color:#4a2a00}
+.btn-edit{background:#f1f1f1;color:var(--text-dark)}
+
+#petals{pointer-events:none}
+.petal{position:absolute;top:-10vh;left:0;width:30px;height:30px;background-image:radial-gradient(circle at 30% 30% , #fff, #ffd3ea 40%);opacity:0.9;border-radius:50% 50% 50% 0;transform:rotate(45deg)}
+@media (max-width:720px){
+  .content{
+    flex-direction:column;
+  }
+  .logo{width:64px;height:64px;font-size:20px}
+  h1{font-size:24px}
+}
+
+@media print{
+body{background:white;color:black}
+.card{box-shadow:none;border:1px solid #ddd;backdrop-filter:none;background:white}
+.message{box-shadow:none;border:1px solid #eee}
+.hint-box,.clock,.controls{display:none}
+}
+footer{margin-top:18px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.08);display:flex;justify-content:space-between;color:var(--text-light)}
+#dateText{font-style:italic}
+
+/* --- Overlay, Heart & Scrolling Text --- */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.8s ease-in-out, background-color 0.8s ease-in-out;
+  padding: 1em;
+  background-color: var(--bg1); /* Start with a solid background */
+}
+#overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.instruction {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(255,255,255,0.5);
+}
+.heart {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  background: var(--accent);
+  transform: rotate(-45deg);
+  cursor: pointer;
+  animation: pulse 1.5s infinite;
+  z-index: 2;
+  box-shadow: 0 0 30px rgba(200, 75, 122, 0.6);
+}
+.heart::before,
+.heart::after {
+  content: '';
+  width: 100px;
+  height: 100px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: absolute;
+}
+.heart::before {
+  top: -50px;
+  left: 0;
+}
+.heart::after {
+  top: 0;
+  left: 50px;
+}
+@keyframes pulse {
+  0% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(1.15); }
+  100% { transform: rotate(-45deg) scale(1); }
+}
+
+/* Heart explosion particles */
+.particle {
+  position: absolute;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1001; /* Above overlay content */
+}
+
+/* Scrolling Text Background */
+.scrolling-text-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  background: transparent; /* Should be transparent to let parent bg show */
+}
+/* This is for the CARD's scrolling text */
+.card .scrolling-text {
+  display: flex;
+  width: 600%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: scroll-left 90s linear infinite;
+}
+.card .scrolling-text p {
+  flex-shrink: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0 20px;
+  font-size: 2.2em;
+  font-weight: 800;
+  color: rgba(200, 75, 122, 0.06);
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-16.66666%);
+  }
+}
+
+/* --- Make card content sit on top of its new background --- */
+.card > header,
+.card > .content,
+.card > footer,
+.card > #petals {
+  position: relative;
+  z-index: 2;
+}
+
+/* Style the scrolling text container specifically for the card */
+.card .scrolling-text-container {
+  border-radius: 18px; /* Match the card's border-radius */
+}
+
+/* --- Orientation Lock & Mobile Polish --- */
+#rotate-prompt {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg1);
+  color: var(--accent);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 600;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* On screens that are taller than they are wide (portrait mode) */
+@media (orientation: portrait) {
+  #rotate-prompt {
+    opacity: 1;
+    pointer-events: all;
+  }
+  /* Hide the main content */
+  body > #overlay, 
+  body > .container {
+    display: none;
+  }
+}
+
+/* Polish for smaller landscape screens */
+@media (max-width: 960px) and (orientation: landscape) {
+  .card {
+    padding: 20px;
+    margin: 20px 0; /* Add some vertical margin */
+    max-height: calc(100vh - 40px); /* Prevent card from being too tall */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+  }
+  h1 {
+    font-size: 28px;
+  }
+  .logo {
+    width: 70px;
+    height: 70px;
+    font-size: 22px;
+  }
+  .card .scrolling-text p,
+  #overlay .scrolling-text p {
+    font-size: 2em;
+  }
+}
+
+/* --- Animations --- */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translate3d(0, -20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 10px rgba(200, 75, 122, 0.5), 0 0 20px rgba(200, 75, 122, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(255, 122, 162, 0.8), 0 0 35px rgba(255, 122, 162, 0.6); }
+  100% { box-shadow: 0 0 10px rgba(200, 75, 122, 0.5), 0 0 20px rgba(200, 75, 122, 0.3); }
+}
+
+/* --- Performance --- */
+.scrolling-text, .scrolling-row, .petal, .heart, .particle {
+  will-change: transform, opacity;
+}
+
+/* --- Overlay Specific Scrolling Rows --- */
+#overlay .scrolling-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1vh; /* Use viewport height for spacing */
+}
+
+#overlay .scrolling-row {
+  display: flex;
+  width: 300%; /* 3 copies of the text */
+  flex-shrink: 0;
+}
+
+#overlay .scrolling-row p {
+    flex-shrink: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0 20px;
+    font-size: 2.5em;
+    font-weight: 800;
+    color: rgba(200, 75, 122, 0.1);
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Define specific animations for the overlay to not conflict with the card animation */
+@keyframes overlay-scroll-left {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-33.33333%); }
+}
+
+@keyframes overlay-scroll-right {
+  from { transform: translateX(-33.33333%); }
+  to { transform: translateX(0%); }
+}
+
+/* Apply the animations to the rows */
+#overlay .scrolling-row:nth-child(odd) {
+  animation: overlay-scroll-right 50s linear infinite;
+}
+
+#overlay .scrolling-row:nth-child(even) {
+  animation: overlay-scroll-left 50s linear infinite;
+}
+
+/* Hide the old single-row scrolling text that might exist in the overlay */
+#overlay .scrolling-text {
+    display: none;
+}
+
+/* --- Secret Message --- */
+#secret-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 30px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5em;
+  z-index: 999; /* Below the overlay, but above the hidden card */
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+#secret-message.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#secret-message:hover {
+  background: rgba(0,0,0,0.85);
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.container {
+  transition: opacity 0.8s ease-in-out;
+}

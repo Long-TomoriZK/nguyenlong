@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GV - Tặng cô 20/11</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Prompt for mobile users to rotate their screen -->
+<div id="rotate-prompt">
+  <p>Cô ơi, xoay ngang màn hình để xem thiệp nhé!</p>
+</div>
+
+<!-- Initial overlay with heart -->
+<div id="overlay">
+  <div class="scrolling-text-container">
+    <div class="scrolling-row">
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+    </div>
+    <div class="scrolling-row">
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+    </div>
+    <div class="scrolling-row">
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+    </div>
+    <div class="scrolling-row">
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+    </div>
+  </div>
+  <div class="heart" id="heart" title="Nhấn vào đây"></div>
+  <p class="instruction">Cô hãy nhấn vào trái tim có điều bất ngờ đó ><❤️</p>
+</div>
+
+<!-- Main content card -->
+<div class="container hidden">
+  <div class="card" id="card">
+    <!-- This container is now in the card's background via CSS -->
+    <div class="scrolling-text-container">
+      <div class="scrolling-text">
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+        <p>CHÚC CÔ NGUYỄN THÙY DUNG 20/11 VUI VẺ NHA ><</p>
+      </div>
+    </div>
+
+    <header>
+      <div class="logo">20/11</div>
+      <div>
+        <h1 id="titleText">Tặng Cô Thân Yêu</h1>
+        <p class="lead">CHÚC CÔ DUNG 20/11 VUI VẺ LUÔN TRÀN ĐÂY SỨC KHỎE NHA ><❤️</p>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="left">
+        <div class="message" id="messageBox">
+          <h2 id="subTitle">Chúc mừng Ngày Nhà Giáo Việt Nam 20/11</h2>
+          <p id="bodyText">Cô ơi, nhân ngày 20/11 em cũng không biết viết gì nhiều. Em học hơi dở văn nên câu chữ hơi kì kì cô đừng cười. Em chỉ muốn chúc cô luôn vui vẻ, khoẻ mạnh, dạy tụi em hoài và đừng buồn vì mấy đứa quậy trong lớp. Em cảm ơn cô vì đã chịu cực với tụi em, nhiều khi em cũng lì nhưng em thương cô. Chúc cô một ngày 20/11 bình yên và lúc nào cũng tươi như bông hoa hồng.</p>
+          <div class="controls" style="display: none;">
+            <button class="btn-play" id="playBtn" title="Phát nhạc">▶</button>
+            <button class="btn-edit" id="editBtn" title="Chỉnh sửa">✎</button>
+            <button class="btn-print" id="printBtn" title="Lưu / In">🖨</button>
+          </div>
+        </div>
+
+        <footer>
+          <div>Người tặng: <strong id="authorName">NGUYỄN ĐỨC LONG</strong></div>
+          <div id="dateText">20 tháng 11, 2025</div>
+        </footer>
+      </div>
+
+      </div>
+
+    <div id="petals" aria-hidden="true"></div>
+  </div>
+</div>
+
+<div id="secret-message">Có điều bí ẩn đằng sau</div>
+
+<audio id="bgAudio" src="" preload="auto"></audio>
+<script src="script.js"></script>
+
+</body>
+</html>
